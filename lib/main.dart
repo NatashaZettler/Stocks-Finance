@@ -48,10 +48,36 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
       ),
-      body: _selectedIndex == 0 ? Text('1') : Text('2'),
+      body: _selectedIndex == 0 ? favoriteGridView() : stockListView(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
 
+Widget favoriteGridView() {
+  return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+      ),
+      itemBuilder: (context, index) {
+        return GridTile(
+            child: InkWell(
+              child: Text('Botão'),
+              onTap: () => print('Funciona'),
+            ));
+      });
+}
 
+Widget stockListView() {
+  return ListView.builder(
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text('AÇÃO'),
+            subtitle: Text('AÇÃO'),
+            trailing: IconButton(
+              icon: Icon(Icons.map), onPressed: () => print('FOIII'),));
+
+      });
+}
