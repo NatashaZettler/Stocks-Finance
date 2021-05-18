@@ -62,10 +62,16 @@ Widget favoriteGridView() {
       ),
       itemBuilder: (context, index) {
         return GridTile(
-            child: InkWell(
-              child: Text('Botão'),
-              onTap: () => print('Funciona'),
-            ));
+          header: Text('GRIDTILE'),
+          child: InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StockDetails(index),
+              ),
+            ),
+          ),
+        );
       });
 }
 
@@ -75,9 +81,31 @@ Widget stockListView() {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text('AÇÃO'),
-            subtitle: Text('AÇÃO'),
-            trailing: IconButton(
-              icon: Icon(Icons.map), onPressed: () => print('FOIII'),));
-
+          subtitle: Text('AÇÃOSUB'),
+          trailing: IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {},
+          ),
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => StockDetails(index))),
+        );
       });
+}
+
+class StockDetails extends StatelessWidget {
+  final int index;
+
+  StockDetails(this.index);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Stocks Finance'),
+      ),
+      body: Container(
+        color: Colors.purple,
+      ),
+    );
+  }
 }
