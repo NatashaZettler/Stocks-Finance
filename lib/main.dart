@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_finance/repository/api/stocks_api.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,14 +49,16 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
       ),
-      body: _selectedIndex == 0 ? favoriteGridView() : stockListView(),
+      body: _selectedIndex == 0 ? StockGridView() : StockListView(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
 
-Widget favoriteGridView() {
-  return GridView.builder(
+class StockGridView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 4,
@@ -72,11 +75,15 @@ Widget favoriteGridView() {
             ),
           ),
         );
-      });
+      },
+    );
+  }
 }
 
-Widget stockListView() {
-  return ListView.builder(
+class StockListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
       itemCount: 3,
       itemBuilder: (context, index) {
         return ListTile(
@@ -86,10 +93,16 @@ Widget stockListView() {
             icon: Icon(Icons.map),
             onPressed: () {},
           ),
-          onTap: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => StockDetails(index))),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StockDetails(index),
+            ),
+          ), // MaterialPageRoute(builder: (context) => StockDetails(index))),
         );
-      });
+      },
+    );
+  }
 }
 
 class StockDetails extends StatelessWidget {
