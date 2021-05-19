@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_finance/repository/api/stocks_api.dart';
+import 'package:stocks_finance/ui/pages/stocks_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,116 +9,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Stocks Finance'),
+      home: StocksPage(title: 'Stocks Finance'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(label: 'TESTE', icon: Icon(Icons.add)),
-          BottomNavigationBarItem(label: 'TESTE2', icon: Icon(Icons.add)),
-        ],
-        onTap: _onItemTapped,
-        currentIndex: _selectedIndex,
-      ),
-      body: _selectedIndex == 0 ? StockGridView() : StockListView(),
-      // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
 
-class StockGridView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-      ),
-      itemBuilder: (context, index) {
-        return GridTile(
-          header: Text('GRIDTILE'),
-          child: InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StockDetails(index),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
 
-class StockListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('AÇÃO'),
-          subtitle: Text('AÇÃOSUB'),
-          trailing: IconButton(
-            icon: Icon(Icons.map),
-            onPressed: () {},
-          ),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => StockDetails(index),
-            ),
-          ), // MaterialPageRoute(builder: (context) => StockDetails(index))),
-        );
-      },
-    );
-  }
-}
 
-class StockDetails extends StatelessWidget {
-  final int index;
-
-  StockDetails(this.index);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Stocks Finance'),
-      ),
-      body: Container(
-        color: Colors.purple,
-      ),
-    );
-  }
-}
