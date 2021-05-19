@@ -40,7 +40,7 @@ class StockListView extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => StockDetailPage(index),
+                  builder: (context) => StockDetailPage(stock: stock,),
                 ),
               ), // MaterialPageRoute(builder: (context) => StockDetails(index))),
             ),
