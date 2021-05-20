@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_finance/repository/api/stocks_api.dart';
-import 'package:stocks_finance/ui/pages/stocks_detail_page.dart';
+import 'package:stocks_finance/repository/model/stock.dart';
 
 class StocksFavoriteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-      ),
+    return ListView.builder(
       itemBuilder: (context, index) {
-        return GridTile(
-          header: Text('GRIDTILE'),
-          child: InkWell(
-            onTap: () {}
-            //     Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => StockDetailPage(),
-            //   ),
-            // ),
-          ),
-        );
+        return _gridItem(Stock());
       },
+    );
+  }
+
+  _gridItem(Stock stock) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: Image.network(
+            "https://s3.polygon.io/logos/aapl/logo.png",
+            height: 30,
+          ),
+          title: Text(
+            "[AAPL] Apple Inc.",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              "+\$128.08 (0.23%)",
+              style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w300),
+            ),
+          ),
+          trailing: IconButton(icon: Icon(Icons.star), onPressed: () {}),
+        ),
+      ),
     );
   }
 }

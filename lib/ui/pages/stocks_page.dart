@@ -3,8 +3,7 @@ import 'package:stocks_finance/ui/views/stocks_favorite_view.dart';
 import 'package:stocks_finance/ui/views/stocks_list_view.dart';
 
 class StocksPage extends StatefulWidget {
-  StocksPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  StocksPage({Key? key}) : super(key: key);
 
   @override
   _StocksPageState createState() => _StocksPageState();
@@ -23,12 +22,12 @@ class _StocksPageState extends State<StocksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Stocks Finance'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(label: 'TESTE', icon: Icon(Icons.add)),
-          BottomNavigationBarItem(label: 'TESTE2', icon: Icon(Icons.add)),
+          BottomNavigationBarItem(label: 'Favoritas', icon: Icon(Icons.star)),
+          BottomNavigationBarItem(label: 'Ações', icon: Icon(Icons.monetization_on)),
         ],
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
