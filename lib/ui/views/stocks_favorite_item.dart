@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
 import 'package:stocks_finance/repository/model/stock_trade.dart';
 import 'package:stocks_finance/ui/views/stocks_favorite_item_chart.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../repository/api/stocks_api.dart';
 
 class StocksFavoriteItem extends StatelessWidget {
-
   final Stock stock;
 
   StocksFavoriteItem(this.stock);
@@ -24,15 +24,11 @@ class StocksFavoriteItem extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  leading: Image.network(
-                    "https://s3.polygon.io/logos/${stock.ticker!.toLowerCase()}/logo.png",
-                    height: 30,
-                  ),
+                  leading: getLogo(),
                   title: Text(stock.ticker!),
                   subtitle: Text(stock.name!, maxLines: 1),
                 ),
-                StocksFavoriteItemChart(
-                    tradeList: snap.data!, isUp: isUp),
+                StocksFavoriteItemChart(tradeList: snap.data!, isUp: isUp),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Row(
@@ -42,16 +38,12 @@ class StocksFavoriteItem extends StatelessWidget {
                         "\$${double.parse(snap.data!.first.close!).toString()} ",
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            color: isUp
-                                ? Colors.blue
-                                : Colors.red),
+                            color: isUp ? Colors.blue : Colors.red),
                       ),
                       Text(
-                        "(${isUp? '+' : ''}${_getPercent(snap.data!)}%)",
-                        style: TextStyle(
-                            color: isUp
-                                ? Colors.blue
-                                : Colors.red),
+                        "(${isUp ? '+' : ''}${_getPercent(snap.data!)}%)",
+                        style:
+                            TextStyle(color: isUp ? Colors.blue : Colors.red),
                       ),
                     ],
                   ),
@@ -60,6 +52,21 @@ class StocksFavoriteItem extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Widget getLogo() {
+    return FadeInImage.memoryNetwork(
+      placeholder: kTransparentImage,
+      image:
+          "https://s3.polygon.io/logos/${stock.ticker!.toLowerCase()}/logo.png",
+      imageErrorBuilder: (context, error, stackTrace) {
+        return Image.asset(
+          'assets/images/polygon_io.png',
+          height: 20,
+        );
+      },
+      height: 30,
+    );
   }
 
   bool _isTradeUp(List<StockTrade> list) {
@@ -73,8 +80,9 @@ class StocksFavoriteItem extends StatelessWidget {
     StockTrade trade0 = list[0];
     StockTrade trade1 = list[1];
 
-    return (100 - (double.parse(trade1.close!)*100 / double.parse(trade0.close!))).toStringAsFixed(2);
-
+    return (100 -
+            (double.parse(trade1.close!) * 100 / double.parse(trade0.close!)))
+        .toStringAsFixed(2);
   }
 
   Future<List<StockTrade>> _requestTradeList() async {
