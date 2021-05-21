@@ -38,19 +38,27 @@ class _StockListViewState extends State<StockListView> {
   }
 
   Future<List<Stock>> _requestStocks() async {
+    try {
+      var api = await StocksAPI.getAllStocks();
+      var database = await _stocksDAO.getAllStocksFavorites();
 
-    var api = await StocksAPI.getAllStocks();
-    var database = await _stocksDAO.getAllStocksFavorites();
-
-    api.forEach((value) {
-        if(database.contains(value.ticker)){
-          newList.add(Stock(ticker:value.ticker, name: value.name, favorite: 1));
-        }else{
+      api.forEach((value) {
+        if (database.contains(value.ticker)) {
+          newList.add(
+              Stock(ticker: value.ticker, name: value.name, favorite: 1));
+        } else {
           newList.add(value);
+          _stocksDAO.save(value);
         }
-    });
-
-    return newList;
+      });
+      return newList;
+    }on Exception catch (_) {
+      if (newList.length == 0) {
+        var database = await _stocksDAO.getAllStocks();
+        newList.addAll(database);
+      }
+      return newList;
+    }
   }
 
   _listView(List list) =>
