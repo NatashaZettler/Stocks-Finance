@@ -58,48 +58,48 @@ class _StockListViewState extends State<StockListView> {
         itemCount: list.length,
         itemBuilder: (context, index) {
           Stock stock = list[index];
-          return Card(
-            margin: EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(
-                stock.ticker!,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  stock.ticker!,
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.w300),
-                ),
-              ),
-              // leading: Image.network(
-              //   "https://s3.polygon.io/logos/${stock.ticker}/logo.png",
-              //   height: 30,
-              // ),
-              trailing: IconButton(
-                icon: stock.favorite == 0 ? Icon(Icons.star_border) : Icon(
-                    Icons.star),
-                onPressed: () {
-                  setState(() {
-                    stock.favorite == 0 ? stock.setFavorite(1) : stock
-                        .setFavorite(0);
-                    _stocksDAO.save(stock);
-                  });
-                },
-              ),
-              onTap: () =>
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          StockDetailPage(
-                            stock: stock,
-                          ),
-                    ),
-                  ),
-            ),
-          );
+          return _listItem(stock);
         },
       );
+
+  _listItem(Stock stock) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: ListTile(
+        title: Text(
+          stock.ticker!,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            stock.ticker!,
+            style: TextStyle(
+                color: Colors.blue, fontWeight: FontWeight.w300),
+          ),
+        ),
+        trailing: IconButton(
+          icon: stock.favorite == 0 ? Icon(Icons.star_border) : Icon(
+              Icons.star),
+          onPressed: () {
+            setState(() {
+              stock.favorite == 0 ? stock.setFavorite(1) : stock
+                  .setFavorite(0);
+              _stocksDAO.save(stock);
+            });
+          },
+        ),
+        onTap: () =>
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    StockDetailPage(
+                      stock: stock,
+                    ),
+              ),
+            ),
+      ),
+    );
+  }
 }

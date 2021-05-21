@@ -11,6 +11,8 @@ class StocksPage extends StatefulWidget {
 
 class _StocksPageState extends State<StocksPage> {
   int _selectedIndex = 0;
+  Widget favoriteView = StocksFavoriteView();
+  Widget listView = StockListView();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -27,12 +29,13 @@ class _StocksPageState extends State<StocksPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(label: 'Favoritas', icon: Icon(Icons.star)),
-          BottomNavigationBarItem(label: 'Ações', icon: Icon(Icons.monetization_on)),
+          BottomNavigationBarItem(
+              label: 'Ações', icon: Icon(Icons.monetization_on)),
         ],
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
       ),
-      body: _selectedIndex == 0 ? StocksFavoriteView() : StockListView(),
+      body: _selectedIndex == 0 ? favoriteView : listView,
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color.fromRGBO(94, 92, 246, 1),
+        primaryColor: Color.fromRGBO(94, 92, 246, 1.0),
       ),
       home: StocksPage(),
     );

@@ -3,6 +3,7 @@ import 'package:stocks_finance/repository/db/stocks_dao.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
 import 'package:stocks_finance/ui/components/CenteredMessage.dart';
 import 'package:stocks_finance/ui/pages/stocks_detail_page.dart';
+import 'package:stocks_finance/ui/views/stocks_favorite_item.dart';
 
 class StocksFavoriteView extends StatefulWidget {
   @override
@@ -27,7 +28,17 @@ class _StocksFavoriteViewState extends State<StocksFavoriteView> {
               icon: Icons.warning,
             );
           }
-          return _listView(snapshot.data!);
+          return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1
+              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                Stock stock = snapshot.data![index];
+                return StocksFavoriteItem(stock);
+              }
+          );;
         });
   }
 
