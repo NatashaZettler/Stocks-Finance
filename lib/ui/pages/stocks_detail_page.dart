@@ -81,11 +81,16 @@ class _StockDetailPageState extends State<StockDetailPage> {
               onPressed: () {
                 setState(() {
                   dataInformation.clear();
-                  dataInformation.add('Industry: ${stockDetails.industry!}');
-                  dataInformation.add('Sector: ${stockDetails.sector!}');
-                  dataInformation.add('Name: ${stockDetails.name!}');
-                  dataInformation.add('Symbol: ${stockDetails.symbol!}');
-                  dataInformation
+                  if(stockDetails.industry != null)
+                    dataInformation.add('Industry: ${stockDetails.industry!}');
+                  if(stockDetails.sector != null)
+                    dataInformation.add('Sector: ${stockDetails.sector!}');
+                  if(stockDetails.name != null)
+                    dataInformation.add('Name: ${stockDetails.name!}');
+                  if(stockDetails.symbol != null)
+                    dataInformation.add('Symbol: ${stockDetails.symbol!}');
+                  if(stockDetails.exchangeSymbol != null)
+                    dataInformation
                       .add('Exchange Symbol: ${stockDetails.exchangeSymbol!}');
                 });
               },

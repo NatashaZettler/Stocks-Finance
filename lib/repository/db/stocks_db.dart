@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:stocks_finance/repository/db/stocks_dao.dart';
 
 Future<Database> getDatabase() async {
-  final String path = join(await getDatabasesPath(), 'bytebank.db');
+  final String path = join(await getDatabasesPath(), 'stocks_finance.db');
   return openDatabase(
     path,
     onCreate: (db, version) {
