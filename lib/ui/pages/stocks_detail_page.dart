@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:stocks_finance/repository/api/stocks_api.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
@@ -47,7 +49,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
       children: [
         Container(
           padding: EdgeInsets.all(70),
-          child: Image.network(stockDetails.logo!),
+          child: stockDetails.logo == null ? Image.asset('assets/images/polygon.png') : Image.network(stockDetails.logo!),
         ),
         SizedBox(
           height: 30,
