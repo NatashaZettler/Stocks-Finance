@@ -29,19 +29,18 @@ class StocksFavoriteItem extends StatelessWidget {
                     height: 30,
                   ),
                   title: Text(stock.ticker!),
-                  subtitle: Text(stock.name!),
+                  subtitle: Text(stock.name!, maxLines: 1),
                 ),
                 StocksFavoriteItemChart(
                     tradeList: snap.data!, isUp: isUp),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "\$${double.parse(snap.data!.first.close!).toString()} ",
                         style: TextStyle(
-                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                             color: isUp
                                 ? Colors.blue

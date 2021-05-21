@@ -11,8 +11,8 @@ class StocksPage extends StatefulWidget {
 
 class _StocksPageState extends State<StocksPage> {
   int _selectedIndex = 0;
-  Widget favoriteView = StocksFavoriteView();
-  Widget listView = StockListView();
+  StocksFavoriteView? favoriteView;
+  StockListView? listView;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -22,6 +22,10 @@ class _StocksPageState extends State<StocksPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(favoriteView == null) favoriteView = StocksFavoriteView();
+    if(listView == null) listView = StockListView();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Stocks Finance'),

@@ -26,11 +26,14 @@ class _StocksFavoriteItemChartState extends State<StocksFavoriteItemChart> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 2.8,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: LineChart(mainData()),
+    return Container(
+      height: 70,
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(child: LineChart(mainData())),
+        ],
       ),
     );
   }

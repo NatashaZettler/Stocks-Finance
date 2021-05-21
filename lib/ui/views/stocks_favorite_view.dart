@@ -31,7 +31,7 @@ class _StocksFavoriteViewState extends State<StocksFavoriteView> {
           return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1
+                  childAspectRatio: 0.9
               ),
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
