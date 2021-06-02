@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_finance/repository/db/stocks_dao.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
-import 'package:stocks_finance/ui/components/CenteredMessage.dart';
+import 'package:stocks_finance/ui/components/centered_message.dart';
 import 'package:stocks_finance/ui/pages/stocks_detail_page.dart';
 import '../../repository/api/stocks_api.dart';
 

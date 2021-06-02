@@ -27,7 +27,7 @@ class StocksAPI {
     return StockDetails.fromJson(data);
   }
 
-  static Future<List<StockTrade>> getStockTrade(String ticker) async {
+  Future<List<StockTrade>> getStockTrade(String ticker) async {
     Uri url = Uri.parse(
         "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=$ticker&apikey=$API_KEY_ALPHA");
     final response = await http.get(url);

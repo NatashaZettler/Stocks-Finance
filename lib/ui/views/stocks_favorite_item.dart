@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
 import 'package:stocks_finance/repository/model/stock_trade.dart';
 import 'package:stocks_finance/ui/views/stocks_favorite_item_chart.dart';
+import 'package:stocks_finance/widgets/app_dependency.dart';
 import 'package:transparent_image/transparent_image.dart';
-
-import '../../repository/api/stocks_api.dart';
 
 class StocksFavoriteItem extends StatelessWidget {
   final Stock stock;
@@ -13,8 +12,9 @@ class StocksFavoriteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return FutureBuilder<List<StockTrade>>(
-        future: _requestTradeList(),
+        future: dependencies!.stocksAPI!.getStockTrade(stock.ticker!),
         builder: (ctx, snap) {
           if (!snap.hasData) return Center(child: CircularProgressIndicator());
 
@@ -83,9 +83,5 @@ class StocksFavoriteItem extends StatelessWidget {
     return (100 -
             (double.parse(trade1.close!) * 100 / double.parse(trade0.close!)))
         .toStringAsFixed(2);
-  }
-
-  Future<List<StockTrade>> _requestTradeList() async {
-    return await StocksAPI.getStockTrade(stock.ticker!);
   }
 }

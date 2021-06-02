@@ -3,16 +3,14 @@ import 'package:stocks_finance/ui/views/stocks_favorite_view.dart';
 import 'package:stocks_finance/ui/views/stocks_list_view.dart';
 
 class StocksPage extends StatefulWidget {
-  StocksPage({Key? key}) : super(key: key);
-
   @override
   _StocksPageState createState() => _StocksPageState();
 }
 
 class _StocksPageState extends State<StocksPage> {
   int _selectedIndex = 0;
-  StocksFavoriteView? favoriteView;
-  StockListView? listView;
+  StocksFavoriteView? favoriteView = StocksFavoriteView();
+  StockListView? listView = StockListView();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -22,9 +20,8 @@ class _StocksPageState extends State<StocksPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(favoriteView == null) favoriteView = StocksFavoriteView();
-    if(listView == null) listView = StockListView();
+    // if (favoriteView == null) favoriteView = StocksFavoriteView();
+    // if (listView == null) listView = StockListView();
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +37,6 @@ class _StocksPageState extends State<StocksPage> {
         currentIndex: _selectedIndex,
       ),
       body: _selectedIndex == 0 ? favoriteView : listView,
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
