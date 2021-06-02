@@ -20,8 +20,6 @@ class _StocksPageState extends State<StocksPage> {
 
   @override
   Widget build(BuildContext context) {
-    // if (favoriteView == null) favoriteView = StocksFavoriteView();
-    // if (listView == null) listView = StockListView();
 
     return Scaffold(
       appBar: AppBar(
