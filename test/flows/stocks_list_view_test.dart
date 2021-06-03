@@ -12,6 +12,7 @@ import 'package:stocks_finance/ui/pages/stocks_page.dart';
 import 'package:stocks_finance/ui/views/stocks_favorite_item.dart';
 import 'package:stocks_finance/ui/views/stocks_favorite_view.dart';
 
+import '../matcher/matchers.dart';
 import 'stocks_list_view_test.mocks.dart';
 
 @GenerateMocks([StocksDAO, StocksAPI])
@@ -36,9 +37,7 @@ void main() {
     final stocksPage = find.byType(StocksPage);
     expect(stocksPage, findsOneWidget);
 
-    final labelBottomNavigationBarItem =
-        find.widgetWithText(BottomNavigationBar, 'Favoritas');
-    expect(labelBottomNavigationBarItem, findsOneWidget);
+    labelBottomNavigationBarItem();
 
     final stockListView = find.byType(StocksFavoriteView);
     expect(stockListView, findsOneWidget);
@@ -70,18 +69,14 @@ void main() {
     final stocksPage = find.byType(StocksPage);
     expect(stocksPage, findsOneWidget);
 
-    final labelBottomNavigationBarItem =
-        find.widgetWithText(BottomNavigationBar, 'Favoritas');
-    expect(labelBottomNavigationBarItem, findsOneWidget);
+    labelBottomNavigationBarItem();
 
     final stockTrade = StockTrade(
         date: 'A', open: 'A', high: 'A', low: 'A', close: '2.3', volume: 'A');
     when(stocksAPI.getStockTrade(any))
         .thenAnswer((_) async => [stockTrade, stockTrade]);
 
-    final stockListView = find.byType(StocksFavoriteView);
-    expect(stockListView, findsOneWidget);
-    await tester.pumpAndSettle();
+    await stocksFavoriteView(tester);
 
     verify(stocksDAO.getStocksFavorites()).called(1);
     await tester.pumpAndSettle();
