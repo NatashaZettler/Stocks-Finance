@@ -20,16 +20,20 @@ class _StocksPageState extends State<StocksPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Stocks Finance'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(label: 'Favoritas', icon: Icon(Icons.star)),
           BottomNavigationBarItem(
-              label: 'Ações', icon: Icon(Icons.monetization_on)),
+            label: 'Favoritas',
+            icon: Icon(Icons.star),
+          ),
+          BottomNavigationBarItem(
+            label: 'Ações',
+            icon: Icon(Icons.monetization_on),
+          ),
         ],
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,

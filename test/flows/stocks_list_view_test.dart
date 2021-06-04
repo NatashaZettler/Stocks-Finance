@@ -37,7 +37,7 @@ void main() {
     final stocksPage = find.byType(StocksPage);
     expect(stocksPage, findsOneWidget);
 
-    labelBottomNavigationBarItem();
+    labelBottomNavigationBarItem('Favoritas');
 
     final stockListView = find.byType(StocksFavoriteView);
     expect(stockListView, findsOneWidget);
@@ -69,19 +69,18 @@ void main() {
     final stocksPage = find.byType(StocksPage);
     expect(stocksPage, findsOneWidget);
 
-    labelBottomNavigationBarItem();
+    labelBottomNavigationBarItem('Favoritas');
 
     final stockTrade = StockTrade(
         date: 'A', open: 'A', high: 'A', low: 'A', close: '2.3', volume: 'A');
     when(stocksAPI.getStockTrade(any))
         .thenAnswer((_) async => [stockTrade, stockTrade]);
 
-    await stocksFavoriteView(tester);
+    await stocksView(tester, StocksFavoriteView);
 
     verify(stocksDAO.getStocksFavorites()).called(1);
     await tester.pumpAndSettle();
 
-    final stocksFavoriteItem = find.byType(StocksFavoriteItem);
-    expect(stocksFavoriteItem, findsOneWidget);
+    stocksItem(StocksFavoriteItem);
   });
 }

@@ -3,6 +3,7 @@ import 'package:stocks_finance/repository/db/stocks_dao.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
 import 'package:stocks_finance/ui/components/centered_message.dart';
 import 'package:stocks_finance/ui/pages/stocks_detail_page.dart';
+import 'package:stocks_finance/widgets/app_dependency.dart';
 import '../../repository/api/stocks_api.dart';
 
 class StockListView extends StatefulWidget {
@@ -11,19 +12,18 @@ class StockListView extends StatefulWidget {
 }
 
 class _StockListViewState extends State<StockListView> {
-  final StocksDAO _stocksDAO = StocksDAO();
-
   bool favoriteIcon = false;
 
   List<Stock> newList = [];
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return FutureBuilder<List<Stock>>(
-        future: _requestStocks(),
+        future:
+            _requestStocks(dependencies!.stocksDAO, dependencies!.stocksAPI),
         builder: (context, snapshot) {
-
-          switch(snapshot.connectionState){
+          switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
           }
@@ -33,80 +33,95 @@ class _StockListViewState extends State<StockListView> {
               'You do not have favorites stocks',
               icon: Icons.warning,
             );
-          return _listView(snapshot.data!);
+          return _listView(snapshot.data!, dependencies.stocksDAO);
         });
   }
 
-  Future<List<Stock>> _requestStocks() async {
+  Future<List<Stock>> _requestStocks(
+      StocksDAO stocksDAO, StocksAPI stocksAPI) async {
     try {
-      var api = await StocksAPI.getAllStocks();
-      var database = await _stocksDAO.getAllStocksFavorites();
+      var api = await stocksAPI.getAllStocks();
+      var database = await stocksDAO.getAllStocksFavorites();
 
       api.forEach((value) {
         if (database.contains(value.ticker)) {
-          newList.add(
-              Stock(ticker: value.ticker, name: value.name, favorite: 1));
+          newList
+              .add(Stock(ticker: value.ticker, name: value.name, favorite: 1));
         } else {
           newList.add(value);
-          _stocksDAO.save(value);
+          stocksDAO.save(value);
         }
       });
       return newList;
-    }on Exception catch (_) {
+    } on Exception catch (_) {
       if (newList.length == 0) {
-        var database = await _stocksDAO.getAllStocks();
+        var database = await stocksDAO.getAllStocks();
         newList.addAll(database);
       }
       return newList;
     }
   }
 
-  _listView(List list) =>
-      ListView.builder(
+  _listView(List list, StocksDAO? stocksDAO) => ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
           Stock stock = list[index];
-          return _listItem(stock);
+          return StockItem(stock, stocksDAO!);
         },
       );
+}
 
-  _listItem(Stock stock) {
+class StockItem extends StatefulWidget {
+  final Stock stock;
+  final StocksDAO stocksDAO;
+
+  StockItem(this.stock, this.stocksDAO);
+
+  @override
+  _StockItemState createState() => _StockItemState();
+}
+
+class _StockItemState extends State<StockItem> {
+  @override
+  Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(8.0),
       child: ListTile(
         title: Text(
-          stock.ticker!,
+          widget.stock.ticker!,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
-            stock.ticker!,
+            widget.stock.name!,
             style: TextStyle(
-                color: Colors.blue, fontWeight: FontWeight.w300),
+              color: Colors.blue,
+              fontWeight: FontWeight.w300,
+            ),
           ),
         ),
         trailing: IconButton(
-          icon: stock.favorite == 0 ? Icon(Icons.star_border) : Icon(
-              Icons.star),
+          icon: widget.stock.favorite == 0
+              ? Icon(Icons.star_border)
+              : Icon(Icons.star),
           onPressed: () {
             setState(() {
-              stock.favorite == 0 ? stock.setFavorite(1) : stock
-                  .setFavorite(0);
-              _stocksDAO.save(stock);
+              widget.stock.favorite == 0
+                  ? widget.stock.setFavorite(1)
+                  : widget.stock.setFavorite(0);
+              widget.stocksDAO.save(widget.stock);
             });
           },
         ),
-        onTap: () =>
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    StockDetailPage(
-                      stock: stock,
-                    ),
-              ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => StockDetailPage(
+              stock: widget.stock,
             ),
+          ),
+        ),
       ),
     );
   }

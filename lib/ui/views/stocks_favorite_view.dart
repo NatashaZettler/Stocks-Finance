@@ -17,7 +17,7 @@ class _StocksFavoriteViewState extends State<StocksFavoriteView> {
   Widget build(BuildContext context) {
     final dependencies = AppDependencies.of(context);
     return FutureBuilder<List<Stock>>(
-        future: dependencies!.stocksDAO?.getStocksFavorites(),
+        future: dependencies!.stocksDAO.getStocksFavorites(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(

@@ -14,7 +14,7 @@ class StocksFavoriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dependencies = AppDependencies.of(context);
     return FutureBuilder<List<StockTrade>>(
-        future: dependencies!.stocksAPI!.getStockTrade(stock.ticker!),
+        future: dependencies!.stocksAPI.getStockTrade(stock.ticker!),
         builder: (ctx, snap) {
           if (!snap.hasData) return Center(child: CircularProgressIndicator());
 

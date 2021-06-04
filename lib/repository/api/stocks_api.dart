@@ -10,7 +10,7 @@ class StocksAPI {
   static Uri get urlBase =>
       Uri.parse('https://api.polygon.io/v3/reference/tickers?apiKey=$API_KEY');
 
-  static Future<List<Stock>> getAllStocks() async {
+  Future<List<Stock>> getAllStocks() async {
     final response = await http.get(urlBase);
     Map<dynamic, dynamic> data = jsonDecode(response.body);
     List<dynamic> list = data['results'];
@@ -18,7 +18,7 @@ class StocksAPI {
     return list.map((json) => Stock.fromJson(json)).toList();
   }
 
-  static Future<StockDetails> getStockDetails(String ticker) async {
+  Future<StockDetails> getStockDetails(String ticker) async {
     Uri urlDetails = Uri.parse(
         'https://api.polygon.io/v1/meta/symbols/$ticker/company?&apiKey=$API_KEY');
     final response = await http.get(urlDetails);

@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:stocks_finance/repository/api/stocks_api.dart';
 import 'package:stocks_finance/repository/model/stock.dart';
 import 'package:stocks_finance/repository/model/stock_details.dart';
+import 'package:stocks_finance/widgets/app_dependency.dart';
 
 class StockDetailPage extends StatefulWidget {
   final Stock? stock;
@@ -19,13 +17,14 @@ class _StockDetailPageState extends State<StockDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(94, 92, 246, 1),
         title: Text(widget.stock!.ticker!),
       ),
       body: FutureBuilder<StockDetails>(
-          future: _requestStockDetails(),
+          future: dependencies!.stocksAPI.getStockDetails(widget.stock!.ticker!),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -38,10 +37,6 @@ class _StockDetailPageState extends State<StockDetailPage> {
             return Center(child: Text('Stocks not found'));
           }),
     );
-  }
-
-  Future<StockDetails> _requestStockDetails() async {
-    return await StocksAPI.getStockDetails(widget.stock!.ticker!);
   }
 
   Widget stockDetailView(StockDetails stockDetails) {
