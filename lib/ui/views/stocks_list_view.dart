@@ -18,10 +18,10 @@ class _StockListViewState extends State<StockListView> {
 
   @override
   Widget build(BuildContext context) {
-    final dependencies = AppDependencies.of(context);
+    final dependencies = AppDependencies.of(context)!;
     return FutureBuilder<List<Stock>>(
         future:
-            _requestStocks(dependencies!.stocksDAO, dependencies!.stocksAPI),
+            _requestStocks(dependencies.stocksDAO, dependencies.stocksAPI),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

@@ -28,8 +28,11 @@ class StocksDAO {
   Future<List<Stock>> getStocksFavorites() async {
     final Database database = await getDatabase();
     List<Map<String, dynamic>> data =
-    await database.rawQuery('SELECT * FROM stocks WHERE favorite = ?', [1]);
-    return data.map((element) => Stock(ticker: element['ticker'], name: element['name'],favorite: 1)).toList();
+        await database.rawQuery('SELECT * FROM stocks WHERE favorite = ?', [1]);
+    return data
+        .map((element) => Stock(
+            ticker: element['ticker'], name: element['name'], favorite: 1))
+        .toList();
   }
 
   Future<StockDetails> findStockDetails() async {

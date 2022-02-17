@@ -12,19 +12,20 @@ class StockDetails {
   String? hqState;
   String? exchangeSymbol;
 
-  StockDetails(
-      {this.logo,
-        this.country,
-        this.industry,
-        this.sector,
-        this.phone,
-        this.ceo,
-        this.url,
-        this.name,
-        this.symbol,
-        this.exchangeSymbol,
-        this.hqAddress,
-        this.hqState,});
+  StockDetails({
+    this.logo,
+    this.country,
+    this.industry,
+    this.sector,
+    this.phone,
+    this.ceo,
+    this.url,
+    this.name,
+    this.symbol,
+    this.exchangeSymbol,
+    this.hqAddress,
+    this.hqState,
+  });
 
   StockDetails.fromJson(Map<String, dynamic> json) {
     logo = json['logo'];

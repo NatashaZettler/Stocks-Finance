@@ -24,7 +24,8 @@ class _StockDetailPageState extends State<StockDetailPage> {
         title: Text(widget.stock!.ticker!),
       ),
       body: FutureBuilder<StockDetails>(
-          future: dependencies!.stocksAPI.getStockDetails(widget.stock!.ticker!),
+          future:
+              dependencies!.stocksAPI.getStockDetails(widget.stock!.ticker!),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -44,7 +45,9 @@ class _StockDetailPageState extends State<StockDetailPage> {
       children: [
         Container(
           padding: EdgeInsets.all(70),
-          child: stockDetails.logo == null ? Image.asset('assets/images/polygon.png') : Image.network(stockDetails.logo!),
+          child: stockDetails.logo == null
+              ? Image.asset('assets/images/polygon.png')
+              : Image.network(stockDetails.logo!),
         ),
         SizedBox(
           height: 30,
@@ -78,17 +81,17 @@ class _StockDetailPageState extends State<StockDetailPage> {
               onPressed: () {
                 setState(() {
                   dataInformation.clear();
-                  if(stockDetails.industry != null)
+                  if (stockDetails.industry != null)
                     dataInformation.add('Industry: ${stockDetails.industry!}');
-                  if(stockDetails.sector != null)
+                  if (stockDetails.sector != null)
                     dataInformation.add('Sector: ${stockDetails.sector!}');
-                  if(stockDetails.name != null)
+                  if (stockDetails.name != null)
                     dataInformation.add('Name: ${stockDetails.name!}');
-                  if(stockDetails.symbol != null)
+                  if (stockDetails.symbol != null)
                     dataInformation.add('Symbol: ${stockDetails.symbol!}');
-                  if(stockDetails.exchangeSymbol != null)
-                    dataInformation
-                      .add('Exchange Symbol: ${stockDetails.exchangeSymbol!}');
+                  if (stockDetails.exchangeSymbol != null)
+                    dataInformation.add(
+                        'Exchange Symbol: ${stockDetails.exchangeSymbol!}');
                 });
               },
               child: Text('Contact'),
@@ -105,11 +108,11 @@ class _StockDetailPageState extends State<StockDetailPage> {
                 itemCount: dataInformation.length,
                 itemBuilder: (context, index) {
                   return Card(
-                   margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(10),
                       child: Text(
-                    dataInformation[index],
-                    textAlign: TextAlign.left,
-                  ));
+                        dataInformation[index],
+                        textAlign: TextAlign.left,
+                      ));
                 }),
           ),
         ),

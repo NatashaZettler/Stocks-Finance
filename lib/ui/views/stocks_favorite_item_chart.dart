@@ -52,17 +52,17 @@ class _StocksFavoriteItemChartState extends State<StocksFavoriteItemChart> {
     for (double index = 0; widget.tradeList.length > index; index++) {
       StockTrade trade = widget.tradeList[index.toInt()];
       double close = double.parse(trade.close!);
-      if(close > value) value = close;
+      if (close > value) value = close;
     }
     return value;
   }
 
   double _getMinTradeValue() {
-    double value = double.parse(widget.tradeList.first.close!)*100;
+    double value = double.parse(widget.tradeList.first.close!) * 100;
     for (double index = 0; widget.tradeList.length > index; index++) {
       StockTrade trade = widget.tradeList[index.toInt()];
       double close = double.parse(trade.close!);
-      if(close < value) value = close;
+      if (close < value) value = close;
     }
     return value;
   }
@@ -87,7 +87,8 @@ class _StocksFavoriteItemChartState extends State<StocksFavoriteItemChart> {
           belowBarData: BarAreaData(
             show: true,
             colors: (widget.isUp ? upGradientColors : downGradientColors)
-                .map((color) => color.withOpacity(0.3)).toList(),
+                .map((color) => color.withOpacity(0.3))
+                .toList(),
           ),
         ),
       ],

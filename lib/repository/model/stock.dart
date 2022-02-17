@@ -1,5 +1,4 @@
 class Stock {
-  
   String? ticker;
   String? name;
   int? favorite;
@@ -29,7 +28,7 @@ class Stock {
     return 'Stock{ticker: $ticker, name: $name, favorite: $favorite}';
   }
 
-  void setFavorite(int favorite){
+  void setFavorite(int favorite) {
     this.favorite = favorite;
   }
 }
